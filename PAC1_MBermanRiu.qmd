@@ -1,0 +1,243 @@
+---
+title: "PAC1. Inferència Estadística"
+subtitle: "Maria Berman Riu"
+date: today
+format: pdf
+editor: visual
+editor_options: 
+  chunk_output_type: console
+---
+
+# Exercici 1 (3 punts)
+
+**Una granja de ratolins de laboratori treballa amb ventrades de dues cries exactes. S'estudia la transmissió mendeliana d'un al·lel mutant A. Un progenitor és heterozigot (Aa) i l'altre és homozigot per a l'al·lel normal (aa). Per tant, cada descendència té la probabilitat d'heretar l'al·lel mutant A, independentment de l'altre 1/2**
+
+**La genotipització de cada descendència es realitza en un dia laborable (de dilluns a divendres) triat a l'atzar, amb cinc dies equiprobables i independents entre la descendència i respecte al genotip.**
+
+**a) El tècnic informa que almenys un dels dos descendents és portador i va ser genotipat dilluns. Quina és la probabilitat que tots dos siguin portadors?**
+
+::: callout-important
+Al llarg de l'exercici, en les probabilitats condicionades s'utilitza la barra "/" en substitució de "|" per facilitar l'escriptura.
+:::
+
+```{r}
+# Objectiu: calcular la probabilitat condicionada P(A/B)
+
+# A <- els dos descendents són portadors (Aa)
+# B <- almenys un descendent és portador i genotipat dilluns
+
+# Segons el Teorema Bayes: 
+# P(A/B) = P(B/A)*P(A) / P(B)
+
+# Probabilitats bàsiques:
+p_portador <- 1/2
+p_dilluns <- 1/5
+```
+
+
+-   Càlcul de P(A)
+
+```{r}
+# P(A): Probabilitat que els dos descendents siguin portadors
+
+P_A <- 1/2 * 1/2
+
+paste0("P(A) = ", P_A)
+```
+
+-   Càlcul de P(B)
+
+```{r}
+# P(B): Probabilitat que almenys un dels dos descendents sigui portador i genotipat dilluns
+
+# probabilitat que un descendent sigui portador i genotipat dilluns
+p_PD <- p_portador*p_dilluns
+
+# probabilitat que un descendent NO compleixi aquesta condició
+p_no_PD <- 1- p_PD
+
+# probabilitat que cap dels dos descendents compleixi la condició
+p_cap_PD <- p_no_PD*p_no_PD
+
+# Aplicant la regla del complement:
+P_B <- 1 - p_cap_PD
+
+paste0("P(B) = ", P_B)
+```
+
+-   Càlcul de P(B/A)
+
+```{r}
+# P(B/A): probabilitat que almenys un dels dos descendents hagi estat genotipat dilluns, 
+# sabent que els dos son portadors 
+
+# probabilitat que un descendent NO hagi estat genotipat dilluns
+p_no_dilluns <- 4/5
+
+# probabilitat que cap dels dos hagi estat genotipat dilluns
+p_cap_dilluns <- p_no_dilluns^2
+
+# Aplicant la regla del complement:
+P_B_A <- 1 - p_cap_dilluns
+
+paste0("P(B/A) = ", P_B_A)
+```
+
+-   Càlcul de P(AnB)
+
+```{r}
+# Probabilitat conjunta P(AnB)
+
+P_A_inter_B <- P_B_A * P_A
+
+paste0("P(AnB) = ", P_A_inter_B)
+```
+
+-   Càlcul de P(A/B)
+
+```{r}
+# Aplicació Teorema Bayes
+
+P_A_donat_B <- (P_A_inter_B) / P_B
+
+paste0("P(A/B) = ", round(P_A_donat_B,3))
+```
+
+*Interpretació:*
+
+-   S'obté una P(A/B) de `r round(P_A_donat_B,3)`. Per tant, sabent que almenys un dels dos descendents és portador i ha estat genotipat dilluns, la probabilitat que tots dos siguin portadors és del `r round(P_A_donat_B,3)*100` %.
+
+**b) Ara el tècnic tria aleatòriament un dels dos descendents i comprova que sigui portador i que hagi estat genotipat dilluns. Quina és la probabilitat que tots dos siguin portadors?**
+
+```{r}
+# A <- els dos descendents són portadors (Aa)
+# C <- el descendent seleccionat és portador i ha estat genotipat dilluns
+
+# Segons el Teorema Bayes: 
+# P(A/C) = P(C/A)*P(A) / P(C)
+
+```
+
+-   Càlcul de P(A)
+
+```{r}
+# P(A): Probabilitat que els dos descendents siguin portadors
+
+P_A <- 1/2 * 1/2
+
+paste0("P(A) = ", P_A)
+```
+
+-   Càlcul de P(C)
+
+```{r}
+# P(C): el descendent és portador i genotipat dilluns
+
+P_C <- 1/2 * 1/5
+
+paste0("P(C) = ", P_C)
+```
+
+-   Càlcul de P(C/A)
+
+```{r}
+# P(C/A): el descendent seleccionat ha estat genotipat dilluns, 
+# sabent que els dos descendents són portadors
+
+P_C_A <- 1/5
+
+paste0("P(C/A) = ", P_C_A)
+```
+
+-   Càlcul de P(AnC)
+
+```{r}
+# Probabilitat conjunta
+
+P_A_inter_C <- P_C_A * P_A
+
+paste0("P(AnC) = ", P_A_inter_C)
+```
+
+-   Càlcul de P(A/C)
+
+```{r}
+# Aplicació Teorema Bayes
+
+P_A_donat_C <- (P_A_inter_C) / P_C
+
+paste0("P(A/C) = ", round(P_A_donat_C,3))
+```
+
+*Interpretació:*
+
+-   S'obté una P(A/C) de `r P_A_donat_C`. Sabent que descendent seleccionat és portador i ha estat genotipat dilluns, la probabilitat que tots dos siguin portadors és del `r P_A_donat_C*100` %.
+
+**c) Explica per què a) i b) donen resultats diferents.**
+
+Els apartats a) i b) donen resultats diferents perquè l'esdeveniment condicionat no és el mateix.
+
+A l'apartat a) se sap que almenys un dels dos descendents és portador i ha estat genotipat dilluns, fet que afecta al conjunt dels dos descendents i fa que sigui més probable les situacions en què tots dos són portadors.
+
+En canvi, a l'apartat b) es selecciona aleatòriament un dels descendents i es comprova que és portador i que ha estat genotipat dilluns. Aquesta informació només fa referència a un descendent concret, independentment de l'altre (la seva probabilitat de ser portador continua sent 1/2).
+
+En resum, la diferència recau en que a l'apartat a) la informació es refereix al parell de descendents (quan s'indica "almenys un"), mentre que a l'apartat b) fa referència a un descendent concret seleccionat a l'atzar. Aquest fet fa que les probabilitats resultants siguin diferents.
+
+# Exercici 2 (3 punts)
+
+**En un laboratori, s'estudia el creixement de colònies bacterianes en plaques de cultiu. En condicions habituals, el nombre de colònies per placa varia i es pot descriure mitjançant una distribució de Poisson de mitjana 1,5. Denotem aquest nombre per X, de manera que X~Poisson(1,5). Suposarem que els recomptes obtinguts en diferents plaques són independents.**
+
+**a) Per a una placa, calculem P(X = 0) i P(X ≥ 3)**
+
+```{r}
+# Definició paràmetres de la distribució de Poisson
+lambda <- 1.5
+
+```
+
+-   Càlcul P(X = 0)
+
+```{r}
+# La variable aleatòria X segueix una distribució de Poisson(1.5)
+# Ens demanen la proabilitat puntual P(X=0),és a dir, la probabilitat
+# que el nombre de colònies sigui exactament 0. 
+# Per calcular-ho hem d'utilitzar la funció de masa de probabilitat PMF,
+# que en R es tradueix com la funció dpois()
+
+P_X_0 <- dpois(x = 0, lambda = lambda)
+
+paste0("P(X = 0) = ", round(P_X_0, 3))
+```
+
+*Interpretació:*
+La probabilitat que una placa no presenti cap colònia és del `r round(P_X_0, 3)*100`%. 
+
+-   Càlcul P(X ≥ 3)
+
+```{r}
+# Ens demanen la probabilitat que una placa presenti 3 o més colònies
+# Es pot obtenir restant de 1 la probabilitat acumulada de X ≤ 2, és a dir:
+
+# P(X ≥ 3) = 1 - P(X < 3) = 1 - P(X ≤ 2)
+
+# PEr calcular-ho, hem d'utilitzar la funció de probabilitat acumulada CDF, 
+# que en R es tradueix com ppois()
+
+P_X_menor_2 <- ppois(q = 2,lambda = lambda)
+
+# Probabilitat d'obtenir 3 o més colònies
+
+P_X_mes_3 <- 1 - P_X_menor_2
+
+paste0("P(X ≥ 3) = ", round(P_X_mes_3, 3))
+
+```
+
+
+b) Es preparen cinc làmines. Calcula la probabilitat que el nombre total de colònies
+sigui com a màxim cinc. Justifica la distribució del total.
+c) El laboratori utilitza dues incubadores. El 60% de les plaques s'incuben a la
+incubadora 1, on el nombre de colònies per placa segueix un . El 40% restant
+s'incuba a la incubadora 2, que té una fallada d'esterilització i produeix un . Quan
+s'utilitza la mateixa incubadora, el resultat d'una placa no influeix en el resultat de
+les altres.Poisson(1,5)Poisson(3)
