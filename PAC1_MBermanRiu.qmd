@@ -48,7 +48,8 @@ paste0("P(A) = ", P_A)
 -   Càlcul de P(B)
 
 ```{r}
-# P(B): Probabilitat que almenys un dels dos descendents sigui portador i genotipat dilluns
+# P(B): Probabilitat que almenys un dels dos descendents 
+# sigui portador i genotipat dilluns
 
 # probabilitat que un descendent sigui portador i genotipat dilluns
 p_PD <- p_portador*p_dilluns
@@ -68,8 +69,8 @@ paste0("P(B) = ", P_B)
 -   Càlcul de P(B/A)
 
 ```{r}
-# P(B/A): probabilitat que almenys un dels dos descendents hagi estat genotipat dilluns, 
-# sabent que els dos son portadors 
+# P(B/A): probabilitat que almenys un dels dos descendents hagi
+# estat genotipat dilluns, sabent que els dos son portadors 
 
 # probabilitat que un descendent NO hagi estat genotipat dilluns
 p_no_dilluns <- 4/5
@@ -105,7 +106,7 @@ paste0("P(A/B) = ", round(P_A_donat_B,3))
 
 *Interpretació:*
 
--   S'obté una P(A/B) de `r round(P_A_donat_B,3)`. Per tant, sabent que almenys un dels dos descendents és portador i ha estat genotipat dilluns, la probabilitat que tots dos siguin portadors és del `r round(P_A_donat_B,3)*100` %.
+-   S'obté una P(A/B) de `r round(P_A_donat_B,3)`. Per tant, sabent que almenys un dels dos descendents és portador i ha estat genotipat dilluns, la probabilitat que tots dos siguin portadors és del `r round(P_A_donat_B,3)*100` %. Tot i que a priori, la probabilitat que els dos descendents siguin portadors és només del 0.25, saber que almenys un d'ells és portador i ha estat genotipat dilluns, augmenta aquesta probabilitat fins a `rround(P_A_donat_B,3)`
 
 **b) Ara el tècnic tria aleatòriament un dels dos descendents i comprova que sigui portador i que hagi estat genotipat dilluns. Quina és la probabilitat que tots dos siguin portadors?**
 
@@ -171,7 +172,7 @@ paste0("P(A/C) = ", round(P_A_donat_C,3))
 
 *Interpretació:*
 
--   S'obté una P(A/C) de `r P_A_donat_C`. Sabent que descendent seleccionat és portador i ha estat genotipat dilluns, la probabilitat que tots dos siguin portadors és del `r P_A_donat_C*100` %.
+-   S'obté una P(A/C) de `r P_A_donat_C`. Sabent que descendent seleccionat és portador i ha estat genotipat dilluns, la probabilitat que tots dos siguin portadors és del `r P_A_donat_C*100` %. Aquest resultat és superior al de l'apartat anterior perquè la informació observada fa referència a un descendent en concret i no al conjunt dels dos descendents.
 
 **c) Explica per què a) i b) donen resultats diferents.**
 
@@ -212,13 +213,13 @@ paste0("P(X = 0) = ", round(P_X_0, 3))
 *Interpretació:*
 La probabilitat que una placa no presenti cap colònia és del `r round(P_X_0, 3)*100`%. 
 
--   Càlcul P(X ≥ 3)
+-   Càlcul P(X >= 3)
 
 ```{r}
 # Ens demanen la probabilitat que una placa presenti 3 o més colònies
-# Es pot obtenir restant de 1 la probabilitat acumulada de X ≤ 2, és a dir:
+# Es pot obtenir restant de 1 la probabilitat acumulada de X ≤ 2:
 
-# P(X ≥ 3) = 1 - P(X < 3) = 1 - P(X ≤ 2)
+# P(X >= 3) = 1 - P(X < 3) = 1 - P(X ≤ 2)
 
 # PEr calcular-ho, hem d'utilitzar la funció de probabilitat acumulada CDF, 
 # que en R es tradueix com ppois()
@@ -226,18 +227,169 @@ La probabilitat que una placa no presenti cap colònia és del `r round(P_X_0, 3
 P_X_menor_2 <- ppois(q = 2,lambda = lambda)
 
 # Probabilitat d'obtenir 3 o més colònies
-
 P_X_mes_3 <- 1 - P_X_menor_2
 
-paste0("P(X ≥ 3) = ", round(P_X_mes_3, 3))
+paste0("P(X >= 3) = ", round(P_X_mes_3, 3))
+```
+
+*Interpretació:*
+La probabilitat que una placa presenti 3 o més colònies és del `r round(P_X_mes_3,3)*100`%. 
+
+**b) Es preparen cinc làmines. Calcula la probabilitat que el nombre total de colònies sigui com a màxim cinc. Justifica la distribució del total.**
+
+```{r}
+# Es preparen 5 làmines independents.
+# Aquestes 5 noves variables aleatòries:
+# X1, X2, X3, X4 i X5 
+
+# Es defineix el nombre total de colònies com:
+# T = X1 + X2 + X3 + X4 + X5 
+
+# Seguint una de les propietats de la distribució de Poisson:
+# la suma de variables aleatories independents amb distribució
+# de Poisson, també segueix una distribució de Poisson, 
+# amb el paràmetre igual a la suma dels paràmetres individuals
+
+# T ~ Poisson(1.5 + 1.5 + 1.5 + 1.5 + 1.5)
+
+# Nombre de plaques
+n_plaques <- 5
+
+# Mitjana de colònies per placa
+lambda <- 1.5
+
+# Paràmetre de la distribució total
+lambda_total <- n_plaques*lambda
+
+paste0("lambda total = ", lambda_total)
+```
+
+-   Càlcul P(T <= 5)
+
+```{r}
+# Es calcula la probabilitat acumulada P(T <= 5)
+# mitjançant la funció ppois()
+
+P_T_max_5 <- ppois(q = 5, lambda = lambda_total)
+
+paste0("P(T <= 5) = ", round(P_T_max_5,3))
+```
+
+*Interpretació:*
+La probabilitat que el nombre total de colònies observades en les 5 plaques sigui com a màxim 5 és del `r round(P_T_max_5,3)*100`%. Com que el nombre esperat de colònies en les 5 plaques és E(T) = 7.5, obtenir-ne 5 o menys és un resultat inferior a la mitjana esperada, però encara relativament freqüent. 
+
+
+**c) El laboratori utilitza dues incubadores. El 60% de les plaques s'incuben a la incubadora 1, on el nombre de colònies per placa segueix un Poisson(1,5). El 40% restant s'incuba a la incubadora 2, que té una fallada d'esterilització i produeix un Poisson(3). Quan s'utilitza la mateixa incubadora, el resultat d'una placa no influeix en el resultat de les altres.**
+
+**Es tria una placa a l'atzar, sense saber en quina incubadora era, i es compten quatre colònies.**
+
+**i) Quina probabilitat hi ha que la placa vingui de l'Incubadora 2?**
+
+::: callout-important
+Al llarg de l'exercici, en les probabilitats condicionades s'utilitza la barra "/" en substitució de "|" per facilitar l'escriptura.
+:::
+
+```{r}
+P_Inc1 <- 0.6
+P_Inc2 <- 0.4
+X <- 4
+
+# Per calcular la probabilitat seguirem el teorema Bayes:
+# P(Inc2 / X = 4) = P(X = 4/Inc2)*P(Inc2) / P(X = 4)
+```
+
+-   Càlcul P(X = 4/Inc2)
+```{r}
+# Probabilitat d'observar 4 colònies 
+# si la placa ve de la Incubadora 2
+
+P_X4_Inc2 <- dpois(x = 4, lambda = 3)
+P_X4_Inc2
+```
+
+-   Càlcul P(X = 4/Inc1)
+```{r}
+# Probabilitat d'observar 4 colònies 
+# si la placa ve de la Incubadora 1
+
+P_X4_Inc1 <- dpois(x = 4, lambda = 1.5)
+P_X4_Inc1
+```
+
+-   Càlcul P(X = 4)
+```{r}
+# Amb la llei de la probabilitat total:
+# P(X = 4) = P(X = 4/Inc1)*P(Inc1) + P(X = 4/Inc2)*P(Inc2)
+
+P_X4 <- P_X4_Inc1*P_Inc1 + P_X4_Inc2*P_Inc2
+P_X4
+```
+
+-   Càlcul de P(Inc2 / X = 4)
+
+```{r}
+# Probabilitat que la placa vingui de la incubadora 2 i tingui 4 colònies:
+# Mitjançant el teorema Bayes:
+# P(Inc2 / X = 4) = P(X = 4/Inc2)*P(Inc2) / P(X = 4)
+
+P_Inc2_X4 <- P_X4_Inc2*P_Inc2/P_X4
+
+paste0("Probabilitat P(Inc2 / X = 4) = ", round(P_Inc2_X4,3))
+```
+
+*Interpretació:*
+Sabent que s'han observat 4 colònies, la probabilitat que la placa provingui de la incubadora 2  és del `r round(P_Inc2_X4,3)*100`%.
+
+
+**ii) Una altra placa es pren de la mateixa incubadora que l'anterior, sense saber quina és. Quina probabilitat hi ha que no tingui cap colònia, tenint en compte que en la primera se'n van observar quatre?**
+
+-   Es vol calcular la probabilitat de que aquesta segona placa no tingui cap colònia, condicionat al fet que en la primera hi havia 4 colònies -> P(Y=0/X=4)
+```{r}
+# Definim
+# Y = colònies de la segona placa
+# X = 4 colònies (primera placa)
+
+# Es vol calcular P(Y=0/X=4)
+# Segons la llei de probabilitat total: 
+# P(Y=0/X=4) = P(Y=0/Inc1)*P(Inc1/X=4) + P(Y=0/Inc2)*P(Inc2/X=4)
 
 ```
 
+-   Càlcul P(Y=0/Inc1)
 
-b) Es preparen cinc làmines. Calcula la probabilitat que el nombre total de colònies
-sigui com a màxim cinc. Justifica la distribució del total.
-c) El laboratori utilitza dues incubadores. El 60% de les plaques s'incuben a la
-incubadora 1, on el nombre de colònies per placa segueix un . El 40% restant
-s'incuba a la incubadora 2, que té una fallada d'esterilització i produeix un . Quan
-s'utilitza la mateixa incubadora, el resultat d'una placa no influeix en el resultat de
-les altres.Poisson(1,5)Poisson(3)
+```{r}
+# Probabilitat de 0 colònies si la placa prové de la Incubadora 1
+P_Y0_Inc1 <- dpois(x = 0, lambda = 1.5)
+
+P_Y0_Inc1
+```
+
+-   Càlcul P(Y=0/Inc2)
+```{r}
+# Probabilitat de 0 colònies si la placa prové de la Incubadora 2
+P_Y0_Inc2 <- dpois(x = 0, lambda = 3)
+
+P_Y0_Inc2
+```
+
+-   Càlcul P(Inc1/X=4) i P(Inc2/X=4)
+```{r}
+# La probabilitat P(Inc2/X=4) ja la tenim calculada a l'apartat i)
+P_Inc2_X4
+
+# La probabilitat P(Inc1/X=4) serà la probabilitat restant d'1
+P_Inc1_X4 <- 1 - P_Inc2_X4
+```
+
+-   Càlcul de la probabilitat P(Y=0/X=4)
+```{r}
+# Probabilitat que la segona placa no tingui cap colonia donat que la primera en tenia 4
+# P(Y=0/X=4) = P(Y=0/Inc1)*P(Inc1/X=4) + P(Y=0/Inc2)*P(Inc2/X=4)
+
+P_Y0_X4 <- P_Y0_Inc1*P_Inc1_X4 + P_Y0_Inc2*P_Inc2_X4
+
+paste0("P(Y = 0/X = 4) = ", round(P_Y0_X4,3))
+```
+
+*Interpretació:*
+La probabilitat de que la segona placa de la mateixa incubadora no presenti cap colònia, és del `r round(P_Y0_X4,3)*100`%. L'observació de 4 colònies en la primera placa fa més probable que les dues plaques provinguin de la incubadora 2. Com que la distribució de Poisson(3) té una probabilitat baixa de produir 0 colònies, la probabilitat final d'observar una segona placa sense colònies es redueix fins al `r round(P_Y0_X4,3)*100`%.
