@@ -8,6 +8,10 @@ editor_options:
   chunk_output_type: console
 ---
 
+::: callout-important
+Al llarg dels exercicis 1 i 2, en les probabilitats condicionades s'utilitza la barra "/" en substitució de "|" per facilitar l'escriptura.
+:::
+
 # Exercici 1 (3 punts)
 
 **Una granja de ratolins de laboratori treballa amb ventrades de dues cries exactes. S'estudia la transmissió mendeliana d'un al·lel mutant A. Un progenitor és heterozigot (Aa) i l'altre és homozigot per a l'al·lel normal (aa). Per tant, cada descendència té la probabilitat d'heretar l'al·lel mutant A, independentment de l'altre 1/2**
@@ -16,9 +20,6 @@ editor_options:
 
 **a) El tècnic informa que almenys un dels dos descendents és portador i va ser genotipat dilluns. Quina és la probabilitat que tots dos siguin portadors?**
 
-::: callout-important
-Al llarg de l'exercici, en les probabilitats condicionades s'utilitza la barra "/" en substitució de "|" per facilitar l'escriptura.
-:::
 
 ```{r}
 # Objectiu: calcular la probabilitat condicionada P(A/B)
@@ -106,7 +107,7 @@ paste0("P(A/B) = ", round(P_A_donat_B,3))
 
 *Interpretació:*
 
--   S'obté una P(A/B) de `r round(P_A_donat_B,3)`. Per tant, sabent que almenys un dels dos descendents és portador i ha estat genotipat dilluns, la probabilitat que tots dos siguin portadors és del `r round(P_A_donat_B,3)*100` %. Tot i que a priori, la probabilitat que els dos descendents siguin portadors és només del 0.25, saber que almenys un d'ells és portador i ha estat genotipat dilluns, augmenta aquesta probabilitat fins a `rround(P_A_donat_B,3)`
+-   S'obté una P(A/B) de `r round(P_A_donat_B,3)`. Per tant, sabent que almenys un dels dos descendents és portador i ha estat genotipat dilluns, la probabilitat que tots dos siguin portadors és del `r round(P_A_donat_B,3)*100` %. 
 
 **b) Ara el tècnic tria aleatòriament un dels dos descendents i comprova que sigui portador i que hagi estat genotipat dilluns. Quina és la probabilitat que tots dos siguin portadors?**
 
@@ -211,7 +212,8 @@ paste0("P(X = 0) = ", round(P_X_0, 3))
 ```
 
 *Interpretació:*
-La probabilitat que una placa no presenti cap colònia és del `r round(P_X_0, 3)*100`%. 
+
+-   La probabilitat que una placa no presenti cap colònia és del `r round(P_X_0, 3)*100`%. 
 
 -   Càlcul P(X >= 3)
 
@@ -233,7 +235,8 @@ paste0("P(X >= 3) = ", round(P_X_mes_3, 3))
 ```
 
 *Interpretació:*
-La probabilitat que una placa presenti 3 o més colònies és del `r round(P_X_mes_3,3)*100`%. 
+
+-   La probabilitat que una placa presenti 3 o més colònies és del `r round(P_X_mes_3,3)*100`%. 
 
 **b) Es preparen cinc làmines. Calcula la probabilitat que el nombre total de colònies sigui com a màxim cinc. Justifica la distribució del total.**
 
@@ -276,7 +279,8 @@ paste0("P(T <= 5) = ", round(P_T_max_5,3))
 ```
 
 *Interpretació:*
-La probabilitat que el nombre total de colònies observades en les 5 plaques sigui com a màxim 5 és del `r round(P_T_max_5,3)*100`%. Com que el nombre esperat de colònies en les 5 plaques és E(T) = 7.5, obtenir-ne 5 o menys és un resultat inferior a la mitjana esperada, però encara relativament freqüent. 
+
+-   La probabilitat que el nombre total de colònies observades en les 5 plaques sigui com a màxim 5 és del `r round(P_T_max_5,3)*100`%. Com que el nombre esperat de colònies en les 5 plaques és E(T) = 7.5, obtenir-ne 5 o menys és un resultat inferior a la mitjana esperada, però encara relativament freqüent. 
 
 
 **c) El laboratori utilitza dues incubadores. El 60% de les plaques s'incuben a la incubadora 1, on el nombre de colònies per placa segueix un Poisson(1,5). El 40% restant s'incuba a la incubadora 2, que té una fallada d'esterilització i produeix un Poisson(3). Quan s'utilitza la mateixa incubadora, el resultat d'una placa no influeix en el resultat de les altres.**
@@ -284,10 +288,6 @@ La probabilitat que el nombre total de colònies observades en les 5 plaques sig
 **Es tria una placa a l'atzar, sense saber en quina incubadora era, i es compten quatre colònies.**
 
 **i) Quina probabilitat hi ha que la placa vingui de l'Incubadora 2?**
-
-::: callout-important
-Al llarg de l'exercici, en les probabilitats condicionades s'utilitza la barra "/" en substitució de "|" per facilitar l'escriptura.
-:::
 
 ```{r}
 P_Inc1 <- 0.6
@@ -338,12 +338,13 @@ paste0("Probabilitat P(Inc2 / X = 4) = ", round(P_Inc2_X4,3))
 ```
 
 *Interpretació:*
-Sabent que s'han observat 4 colònies, la probabilitat que la placa provingui de la incubadora 2  és del `r round(P_Inc2_X4,3)*100`%.
+
+-   Sabent que s'han observat 4 colònies, la probabilitat que la placa provingui de la incubadora 2  és del `r round(P_Inc2_X4,3)*100`%.
 
 
 **ii) Una altra placa es pren de la mateixa incubadora que l'anterior, sense saber quina és. Quina probabilitat hi ha que no tingui cap colònia, tenint en compte que en la primera se'n van observar quatre?**
 
--   Es vol calcular la probabilitat de que aquesta segona placa no tingui cap colònia, condicionat al fet que en la primera hi havia 4 colònies -> P(Y=0/X=4)
+Es vol calcular la probabilitat de que aquesta segona placa no tingui cap colònia, condicionat al fet que en la primera hi havia 4 colònies -> P(Y=0/X=4)
 ```{r}
 # Definim
 # Y = colònies de la segona placa
@@ -383,7 +384,8 @@ P_Inc1_X4 <- 1 - P_Inc2_X4
 
 -   Càlcul de la probabilitat P(Y=0/X=4)
 ```{r}
-# Probabilitat que la segona placa no tingui cap colonia donat que la primera en tenia 4
+# Probabilitat que la segona placa no tingui cap colonia donat
+# que la primera en tenia 4
 # P(Y=0/X=4) = P(Y=0/Inc1)*P(Inc1/X=4) + P(Y=0/Inc2)*P(Inc2/X=4)
 
 P_Y0_X4 <- P_Y0_Inc1*P_Inc1_X4 + P_Y0_Inc2*P_Inc2_X4
@@ -392,4 +394,268 @@ paste0("P(Y = 0/X = 4) = ", round(P_Y0_X4,3))
 ```
 
 *Interpretació:*
-La probabilitat de que la segona placa de la mateixa incubadora no presenti cap colònia, és del `r round(P_Y0_X4,3)*100`%. L'observació de 4 colònies en la primera placa fa més probable que les dues plaques provinguin de la incubadora 2. Com que la distribució de Poisson(3) té una probabilitat baixa de produir 0 colònies, la probabilitat final d'observar una segona placa sense colònies es redueix fins al `r round(P_Y0_X4,3)*100`%.
+
+-   La probabilitat de que la segona placa de la mateixa incubadora no presenti cap colònia, és del `r round(P_Y0_X4,3)*100`%. L'observació de 4 colònies en la primera placa fa més probable que les dues plaques provinguin de la incubadora 2. Com que la distribució de Poisson(3) té una probabilitat baixa de produir 0 colònies, la probabilitat final d'observar una segona placa sense colònies es redueix fins al `r round(P_Y0_X4,3)*100`%.
+
+# Exercici 3 (4 punts)
+
+
+**En un estudi, es mesuren dos biomarcadors, X i Y, en cada individu. Com que són variables contínues i poden estar relacionades, s'ha decidit descriure el seu comportament conjunt mitjançant una distribució normal bivariant. Les distribucions marginals són normals amb la mitjana i la desviació estàndard indicades a continuació:**
+
+**X ~ N (100,15^2), Y ~ N (120,20^2),**
+
+**i el coeficient de correlació entre els dos biomarcadors és p=0,6**
+
+**a) Determina la distribució de Y | X = x. Calcula P(Y > 140| X = 110)**
+
+-   Seguint la fòrmula de la distribució condicional:
+
+```{r}
+#| echo: false
+knitr::include_graphics("./Captura de pantalla 2026-11-08 105421.png",dpi = 120)
+```
+
+```{r}
+# Definició paràmetres de la distribució normal bivariant
+
+mu_x <- 100
+sd_x <- 15
+
+mu_y <- 120
+sd_y <- 20
+
+rho <- 0.6
+
+x <- 110
+```
+
+```{r}
+# Aplicació de la fòrmula de distribució condicional per parts
+
+## Mitjana de Y condicionada per x
+
+mu_cond <- mu_y + rho*(sd_y/sd_x)*(x-mu_x)
+
+## Variança i desviació estàndard condicionades
+
+var_cond <- (1 - rho^2)*sd_y^2
+
+sd_cond <- sqrt(var_cond)
+
+# Substituim els valors de la fòrmula per 
+# obtenir la distribució condicional per x:
+
+# mu_cond <- 120 + 0.8(x-100)
+# sd_cond <- 16^2
+```
+
+-   La distribució condicional "Y | X = x" és: `Y | X = x ~ N(120 + 0.8(x−100),256)`
+
+```{r}
+# Calcula P(Y > 140| X = 110)
+
+# Substituim la formula anterior per X=110
+mu_cond <- mu_y + rho*(sd_y/sd_x)*(x-mu_x)
+var_cond <- (1 - rho^2)*sd_y^2
+sd_cond <- sqrt(var_cond)
+
+mu_cond
+sd_cond
+
+# Ja que es segueix una distribució normal, 
+# la probabilitat es pot extreure amb pnorm() 
+p <- 1 - pnorm(q = 140, mean = mu_cond, sd = sd_cond)
+p
+```
+
+-   La probabilitat P(Y > 140| X = 110) = `r round(p,3)`
+
+**b) Calcula P(Y > X)**
+
+```{r}
+# Per calcular P(Y > X), sabem que P(Y > X) és equivalent a P(Y-X>0)
+# Definim una nova variable W per calcular-ho
+# W = Y - X --> P(W>0)
+
+# Com que Y i X segueixen una distribució normal, W també ho serà
+
+# Càlcul de l'esperança/mitjana de W
+# E(W) = E(Y-X) = E(Y) - E(X)
+E_W <- mu_y - mu_x
+E_W
+
+# Càlcul variança de W
+# Var(W) = Var(X,Y) = Var(X)+Var(Y)-2Cov(X,Y)
+
+## Calculem Var(X)
+Var_X <- sd_x^2
+## Calculem Var(Y)
+Var_Y <- sd_y^2
+## Calculem la Cov(X,Y) *fòrmula desenvolupada a l'aparat c)
+Cov_X_Y <- rho * sd_x * sd_y
+
+## Per tant: 
+Var_W <- Var_X+Var_Y-2*Cov_X_Y
+Var_W
+
+sd_w <- sqrt(Var_W)
+sd_w
+
+# La distribució de W és:
+# W ~ N(E_W, sd_w^2) que, substituint els valors:
+# W ~ N(20, 256)
+
+```
+
+```{r}
+# Volem P(Y > X) = P(W > 0)
+P_W_0 <- 1 - pnorm(q = 0, mean = E_W, sd = sd_w)
+P_W_0
+```
+
+-   La probabilitat P(Y > X) és `r round(P_W_0,3)`
+
+*Interpretació*: 
+
+-   En aquest apartat, per tal de calcular P(Y>X), he definit una nova variable W = Y-X. Com que X i Y segueixen una distribució normal bivariant, W també segueix una distribució normal. He calculat l'esperança E(W) i la seva variança Var(W). Per tant, la distribució de `W ~ N(20, 265)`. La probabilitat que demana l'apartat és P(Y > X), que equival a P(Y-X > 0) =  P(W > 0). Un cop he identificat els paràmetres de la distribució W, he calculat la probabilitat amb pnorm()
+
+**c) Calcula Cov(X,Y) Són X i Y independents? Trobeu el valor de aX de manera que X i V = Y - aX i siguin independents.**
+
+```{r}
+# La correlació (rho) entre X i Y segueix la fòrmula:
+# rho = Cov(X,Y)/(sd_x*sd_y)
+# Per tant: Cov(X,Y) = rho*sd_x*sd_y
+
+Cov_X_Y <- rho * sd_x * sd_y
+```
+
+-   La Cov(X,Y) = `r Cov_X_Y`. Les variables X i Y **no són independents** ja que, si ho fossin, la Cov(X,Y) hauria de ser 0 (ja que ens trobem en una distribució normal). A més a més, el coeficient de correlació, també ho hauria de ser i, en el nostre cas, és `r rho`.
+
+```{r}
+# Trobar el valor de a, perque X i V siguin independents
+# V = Y - aX
+
+# Per tal que les variables X i V siguin independents,
+# la Cov(X,V) ha de ser 0. Substituint:
+
+# Cov(X,V) = Cov(X,Y-aX) = 0
+
+# Definició de covariança:
+## Cov(X,V) = E[X-E[X]]*E[V-E[V]] = E[XV]-E[X]E[V]
+
+## Substituint:
+## Cov(X,V)= E[X(Y - aX)] - E(X)E(Y - aX)
+
+## Per parts:
+## E[X(Y - aX)] = E(XY - aX^2) = E(XY) - aE(X^2)
+## E(X)E(Y - aX) = E(X)(E(Y)-aE(X)) = E(X)E(Y) - a[E(X)]^2
+
+## Cov(X,V) = E(XY) - aE(X^2) - E(X)E(Y) - a[E(X)]^2
+## Cov(X,V) = (E(XY)-E(X)E(Y))-a(E(X^2)-[E(X)]^2)
+
+# Sabent que la Var(X) = E(X^2) - [E(X)]^2
+## Queda que:
+
+## Cov(X,V) = Cov(X,Y) - aVar(X)
+```
+
+```{r}
+# Després de la deducció anterior, sabem que:
+# Cov(X,V) = Cov(X,Y) - aVar(X) = 0
+# Per tant, 
+# a <- Cov(X,Y) / Var(X)
+
+a <- Cov_X_Y/Var_X
+
+```
+
+-   El valor de `a` perque X i V siguin independents és: `r a`
+
+**d) Els individus es classifiquen en tres categories segons el valor de Y: baix (Y<100), normal (100<=Y<=140) i alt (Y>140). Deu individus es seleccionen de manera independent. Calcula la probabilitat d'observar exactament dos baixos, sis normals i dos alts.**
+
+```{r}
+# Distribució multinomial 
+
+# P(Yb = 2, Yn = 6, Ya = 2)? 
+
+# P_baix = (Y<100)
+# P_normal = (100<=Y<=140)
+# P_alt = (Y>140)
+
+n <- 10
+Yb <- 2
+Yn <- 6
+Ya <- 2
+
+# La distribució de Y és Y ~ N(120,20^2)
+
+P_baix <- pnorm(100, mean = mu_y, sd = sd_y)
+P_baix
+
+P_alt <- 1 - pnorm(140, mean = mu_y, sd = sd_y)
+P_alt
+
+# Sabem que la suma de les probabilitats ha de ser 1
+# Per tant, P_baix + P_normal + P_alt = 1
+P_normal <- 1 - P_baix - P_alt
+P_normal
+# Aplicant la fòrmula de la distribució multinomial: 
+
+# P(Yb=2,Yn=6,Ya=2) = (n! / (Yb!Yn!Ya!))*P_baix^Yb*P_normal^Yn*P_alt^Ya
+
+P <- factorial(n)/(factorial(Yb)*factorial(Yn)*factorial(Ya))*
+     P_baix^Yb * P_normal^Yn * P_alt^Ya
+P
+```
+
+-   La probabilitat d'observar exactament 2 individus baixos, 6 normals i 2 alts és: P(Yb = 2, Yn = 6, Ya = 2) és del `r round(P,3)*100`%. 
+
+*Interpretació*: 
+
+-   En aquest exercici he considerat que es segueix una distribució multinomial ja que els individus es poden classificar en 3 categories excloents (baix, normal, alt). A partir de la distribució de Y de l'enunciat, he calculat les probabilitats per cada categoria i, a continuació, he aplicat la fòrmula de la probabilitat de la distribució multinomial per obtenir la probabilitat P(Yb = 2, Yn = 6, Ya = 2).
+
+**e) En una mostra de 400 individus seleccionats independentment, quina és la probabilitat aproximada que almenys 75 tinguin Y>140? Justifica l'aproximació utilitzada**
+
+```{r}
+# Definició paràmetres
+# Z = nombre d'indicidus amb Y > 140
+n <- 400
+## P(Y>140) ja l'he calculat a l'apartat anterior, correspon a P_alt
+p <- P_alt 
+
+
+# Es pot aplicar l'aproximació d'una binomial per a la normal: 
+# on la mitjana = np i la variança np(1-p)
+# sempre i quan np>5 i (n(1-p)>5)
+
+# Z ~ Binomial(n,p) = Normal (np, np(1-p)) 
+
+# Comprovació: 
+np <- n*p
+np # és major que 5
+
+n_1_p <- n*(1-p)
+n_1_p # és major que 5
+
+# Es compleixen els requisits per aplicar l'aproximació normal
+```
+
+```{r}
+# Calcul de la mitjana i variança
+mu_z <- n*p
+
+var_z <- n*p*(1-p)
+sd_z <- sqrt(var_z)
+
+# Ens demanen P(Z>=75)
+
+p_Z <- 1 - pnorm(75, mean = mu_z, sd = sd_z)
+p_Z
+```
+
+-   La probabilitat que almenys 75 dels 400 individus presentin Y > 140 és P(Z>=75) = `r round(p_Z, 3)*100`%.
+
+*Interpretació*: 
+
+-   He definit la nova variable Z que correspon al nombre d'individus amb Y > 140. Aquesta segueix una distribució binomial Z ~ Binomial(400, 0.1587). Com que es compleixen les condicions indicades per aproximar una distribució binomial per a una distribució normal, s'utilitza l'aproximació Z ~ N(np, np(1-p)). Finalment, la probabilitat P(Z>=75), l'he calculat amb la funció pnomr() sobre aquesta distribució normal aproximada. 
+
